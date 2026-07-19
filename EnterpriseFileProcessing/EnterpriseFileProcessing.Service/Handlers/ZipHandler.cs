@@ -53,7 +53,14 @@ namespace EnterpriseFileProcessing.Service.Handlers
                 {
                     process.Start();
                     process.BeginOutputReadLine();
-                    await Task.Run(() => process.WaitForExit());
+
+                    using (cancellationToken.Register(() => {
+                        try { if (!process.HasExited) process.Kill(); } catch { }
+                    }))
+                    {
+                        await Task.Run(() => process.WaitForExit());
+                    }
+
                     cancellationToken.ThrowIfCancellationRequested();
 
                     if (process.ExitCode != 0)
@@ -73,6 +80,27 @@ namespace EnterpriseFileProcessing.Service.Handlers
         public Task ResumeAsync(Job job) => Task.CompletedTask;
         public Task CancelAsync(Job job) => Task.CompletedTask;
         public Task<bool> PostVerifyAsync(Job job, CancellationToken cancellationToken) => Task.FromResult(true);
-        public Task RollbackAsync(Job job) => Task.CompletedTask;
+        public Task RollbackAsync(Job job)
+        {
+            Console.WriteLine($"[ZipHandler] Rolling back files for Job {job.JobId}");
+            try
+            {
+                var config = JObject.Parse(job.RequestJson);
+                if (config["ZipFilePath"] != null)
+                {
+                    string dest = config["ZipFilePath"].ToString();
+                    if (System.IO.File.Exists(dest))
+                    {
+                        System.IO.File.Delete(dest);
+                        Console.WriteLine($"[ZipHandler] Rollback successful: Deleted partial zip {dest}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ZipHandler] Rollback failed: {ex.Message}");
+            }
+            return Task.CompletedTask;
+        }
     }
 }

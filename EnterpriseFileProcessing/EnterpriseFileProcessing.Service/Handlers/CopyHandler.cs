@@ -58,7 +58,13 @@ public class CopyHandler : IOperationHandler
                 process.Start();
                 process.BeginOutputReadLine();
 
-                await Task.Run(() => process.WaitForExit());
+                using (cancellationToken.Register(() => {
+                    try { if (!process.HasExited) process.Kill(); } catch { }
+                }))
+                {
+                    await Task.Run(() => process.WaitForExit());
+                }
+
                 cancellationToken.ThrowIfCancellationRequested();
 
                 if (process.ExitCode >= 8)
@@ -103,6 +109,10 @@ public class CopyHandler : IOperationHandler
     public Task RollbackAsync(Job job)
     {
         Console.WriteLine($"[CopyHandler] Rolling back files for Job {job.JobId}");
+        // Note: We cannot blindly delete the DestinationPath directory here,
+        // as it might be a pre-existing directory containing user data.
+        // A true rollback requires tracking the specific files that were created.
+        Console.WriteLine($"[CopyHandler] Safe rollback triggered. Skipping full directory wipe to prevent data loss.");
         return Task.CompletedTask;
     }
 }

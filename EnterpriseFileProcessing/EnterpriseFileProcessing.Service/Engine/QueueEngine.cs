@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ public class QueueEngine : IQueueEngine
 {
     private readonly IJobRepository _jobRepository;
     private readonly IProcessingPipeline _processingPipeline;
+        private readonly ConcurrentDictionary<Guid, CancellationTokenSource> _activeJobs;
     private bool _isRunning = false;
     private const int MaxConcurrentJobs = 3;
 
@@ -20,6 +22,7 @@ public class QueueEngine : IQueueEngine
     {
         _jobRepository = jobRepository;
         _processingPipeline = processingPipeline;
+            _activeJobs = new ConcurrentDictionary<Guid, CancellationTokenSource>();
     }
 
     public void Start(CancellationToken cancellationToken)
@@ -43,10 +46,23 @@ public class QueueEngine : IQueueEngine
         {
             while (_isRunning && !cancellationToken.IsCancellationRequested)
             {
-                var waitingJobs = _jobRepository.GetJobsByState(JobState.Waiting).ToList();
+                // 1. Check for User-Initiated Cancellations
+                var cancelledJobs = _jobRepository.GetJobsByState(JobState.Cancelled, 100).ToList();
+                foreach (var cancelledJob in cancelledJobs)
+                {
+                    if (_activeJobs.TryGetValue(cancelledJob.JobId, out var jobTokenSource))
+                    {
+                        if (!jobTokenSource.IsCancellationRequested)
+                        {
+                            Console.WriteLine($"[QueueEngine] User cancellation detected for Job: {cancelledJob.JobId}");
+                            jobTokenSource.Cancel();
+                        }
+                    }
+                }
 
-                // Get running jobs to respect MaxConcurrentJobs limits
-                var runningCount = _jobRepository.GetJobsByState(JobState.Running).Count();
+                // 2. Dispatch waiting jobs
+                var waitingJobs = _jobRepository.GetJobsByState(JobState.Waiting).ToList();
+                var runningCount = _activeJobs.Count;
 
                 foreach (var job in waitingJobs)
                 {
@@ -57,16 +73,25 @@ public class QueueEngine : IQueueEngine
 
                     Console.WriteLine($"[QueueEngine] Dispatching Job: {job.JobId}");
 
+                    // Create linked token so global shutdown ALSO cancels the job
+                    var jobCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    _activeJobs.TryAdd(job.JobId, jobCts);
+
                     // Fire and forget so we can process multiple
                     _ = Task.Run(async () =>
                     {
                         try
                         {
-                            await _processingPipeline.ProcessJobAsync(job, cancellationToken);
+                            await _processingPipeline.ProcessJobAsync(job, jobCts.Token);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine($"[QueueEngine] Error dispatching job: {ex.Message}");
+                        }
+                        finally
+                        {
+                            _activeJobs.TryRemove(job.JobId, out _);
+                            jobCts.Dispose();
                         }
                     }, cancellationToken);
                 }

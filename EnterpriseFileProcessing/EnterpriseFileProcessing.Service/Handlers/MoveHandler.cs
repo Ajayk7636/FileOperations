@@ -55,7 +55,14 @@ namespace EnterpriseFileProcessing.Service.Handlers
                 {
                     process.Start();
                     process.BeginOutputReadLine();
-                    await Task.Run(() => process.WaitForExit());
+
+                    using (cancellationToken.Register(() => {
+                        try { if (!process.HasExited) process.Kill(); } catch { }
+                    }))
+                    {
+                        await Task.Run(() => process.WaitForExit());
+                    }
+
                     cancellationToken.ThrowIfCancellationRequested();
 
                     if (process.ExitCode >= 8)
@@ -75,6 +82,11 @@ namespace EnterpriseFileProcessing.Service.Handlers
         public Task ResumeAsync(Job job) => Task.CompletedTask;
         public Task CancelAsync(Job job) => Task.CompletedTask;
         public Task<bool> PostVerifyAsync(Job job, CancellationToken cancellationToken) => Task.FromResult(true);
-        public Task RollbackAsync(Job job) => Task.CompletedTask;
+        public Task RollbackAsync(Job job)
+        {
+            Console.WriteLine($"[MoveHandler] Rolling back files for Job {job.JobId}");
+            Console.WriteLine($"[MoveHandler] Safe rollback triggered. Skipping full directory wipe to prevent data loss.");
+            return Task.CompletedTask;
+        }
     }
 }

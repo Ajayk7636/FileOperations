@@ -60,8 +60,21 @@ public class ProcessingPipeline : IProcessingPipeline
         catch (OperationCanceledException)
         {
             job.State = JobState.Cancelled;
+
+            _jobRepository.AddJobLog(job.JobId, "Job was cancelled, attempting rollback...", "Warning");
+            try
+            {
+                var handler = OperationFactory.GetHandler(job.OperationType);
+                await handler.RollbackAsync(job);
+                _jobRepository.AddJobLog(job.JobId, "Rollback completed successfully", "Info");
+            }
+            catch (Exception rbEx)
+            {
+                _jobRepository.AddJobLog(job.JobId, $"Rollback failed: {rbEx.Message}", "Error");
+            }
+
             _jobRepository.UpdateJob(job);
-            _jobRepository.AddJobLog(job.JobId, "Job was cancelled", "Warning");
+            _jobRepository.AddJobLog(job.JobId, "Job cancellation finalized", "Warning");
             _emailEngine.SendStatusEmail(job, "JobCancelled");
         }
         catch (Exception ex)
