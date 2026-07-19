@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="EnterpriseFileProcessing.Core/EnterpriseFileProcessing.Core.csproj" />
+  <Project Path="EnterpriseFileProcessing.Data/EnterpriseFileProcessing.Data.csproj" />
+  <Project Path="EnterpriseFileProcessing.Service/EnterpriseFileProcessing.Service.csproj" />
+</Solution>
