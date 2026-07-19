@@ -1,4 +1,6 @@
-namespace EnterpriseFileProcessing.Core.Models;
+namespace EnterpriseFileProcessing.Core.Models
+{
+
 
 public enum OperationType
 {
@@ -9,4 +11,5 @@ public enum OperationType
     Encrypt = 5,
     Decrypt = 6,
     Validate = 7
+}
 }

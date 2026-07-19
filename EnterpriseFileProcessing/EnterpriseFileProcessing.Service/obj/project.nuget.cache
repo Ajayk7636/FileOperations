@@ -1,8 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "LGX+Su9GQ/s=",
+  "dgSpecHash": "CyNH+U0ZQH4=",
   "success": true,
   "projectFilePath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Service/EnterpriseFileProcessing.Service.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/jules/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.3/microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "/home/jules/.nuget/packages/microsoft.netframework.referenceassemblies.net462/1.0.3/microsoft.netframework.referenceassemblies.net462.1.0.3.nupkg.sha512",
+    "/home/jules/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/jules/.nuget/packages/system.configuration.configurationmanager/4.7.0/system.configuration.configurationmanager.4.7.0.nupkg.sha512",
+    "/home/jules/.nuget/packages/system.data.sqlclient/4.8.6/system.data.sqlclient.4.8.6.nupkg.sha512",
+    "/home/jules/.nuget/packages/system.security.accesscontrol/4.7.0/system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "/home/jules/.nuget/packages/system.security.permissions/4.7.0/system.security.permissions.4.7.0.nupkg.sha512",
+    "/home/jules/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }

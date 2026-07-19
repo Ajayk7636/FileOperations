@@ -1,6 +1,8 @@
 using System;
 
-namespace EnterpriseFileProcessing.Core.Models;
+namespace EnterpriseFileProcessing.Core.Models
+{
+
 
 public class Job
 {
@@ -17,4 +19,5 @@ public class Job
     public int MaxRetries { get; set; }
     public string ErrorMessage { get; set; } = string.Empty;
     public string CreatedBy { get; set; } = string.Empty;
+}
 }

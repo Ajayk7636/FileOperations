@@ -5,15 +5,19 @@ using EnterpriseFileProcessing.Core.Interfaces;
 using EnterpriseFileProcessing.Core.Models;
 using EnterpriseFileProcessing.Service.Handlers;
 
-namespace EnterpriseFileProcessing.Service.Engine;
+namespace EnterpriseFileProcessing.Service.Engine
+{
+
 
 public class ProcessingPipeline : IProcessingPipeline
 {
     private readonly IJobRepository _jobRepository;
+    private readonly IEmailNotificationEngine _emailEngine;
 
-    public ProcessingPipeline(IJobRepository jobRepository)
+    public ProcessingPipeline(IJobRepository jobRepository, IEmailNotificationEngine emailEngine)
     {
         _jobRepository = jobRepository;
+        _emailEngine = emailEngine;
     }
 
     public async Task ProcessJobAsync(Job job, CancellationToken cancellationToken)
@@ -24,6 +28,7 @@ public class ProcessingPipeline : IProcessingPipeline
             job.StartedAt = DateTime.UtcNow;
             _jobRepository.UpdateJob(job);
             _jobRepository.AddJobLog(job.JobId, "Job started", "Info");
+            _emailEngine.SendStatusEmail(job, "JobStarted");
 
             // 1. Factory - Get Handler
             var handler = OperationFactory.GetHandler(job.OperationType);
@@ -50,12 +55,14 @@ public class ProcessingPipeline : IProcessingPipeline
             job.CompletedAt = DateTime.UtcNow;
             _jobRepository.UpdateJob(job);
             _jobRepository.AddJobLog(job.JobId, "Job completed successfully", "Success");
+            _emailEngine.SendStatusEmail(job, "JobCompleted");
         }
         catch (OperationCanceledException)
         {
             job.State = JobState.Cancelled;
             _jobRepository.UpdateJob(job);
             _jobRepository.AddJobLog(job.JobId, "Job was cancelled", "Warning");
+            _emailEngine.SendStatusEmail(job, "JobCancelled");
         }
         catch (Exception ex)
         {
@@ -63,6 +70,8 @@ public class ProcessingPipeline : IProcessingPipeline
             job.ErrorMessage = ex.Message;
             _jobRepository.UpdateJob(job);
             _jobRepository.AddJobLog(job.JobId, $"Job failed: {ex.Message}", "Error", ex.StackTrace ?? string.Empty);
+            _emailEngine.SendStatusEmail(job, "JobFailed");
         }
     }
+}
 }

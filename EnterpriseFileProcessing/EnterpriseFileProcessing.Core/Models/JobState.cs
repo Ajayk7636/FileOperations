@@ -1,4 +1,6 @@
-namespace EnterpriseFileProcessing.Core.Models;
+namespace EnterpriseFileProcessing.Core.Models
+{
+
 
 public enum JobState
 {
@@ -12,4 +14,5 @@ public enum JobState
     Retry = 8,
     Scheduled = 9,
     ApprovalPending = 10
+}
 }

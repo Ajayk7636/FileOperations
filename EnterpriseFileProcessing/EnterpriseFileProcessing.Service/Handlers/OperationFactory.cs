@@ -2,7 +2,9 @@ using System;
 using EnterpriseFileProcessing.Core.Interfaces;
 using EnterpriseFileProcessing.Core.Models;
 
-namespace EnterpriseFileProcessing.Service.Handlers;
+namespace EnterpriseFileProcessing.Service.Handlers
+{
+
 
 public static class OperationFactory
 {
@@ -17,4 +19,5 @@ public static class OperationFactory
                 throw new NotSupportedException($"Operation {operationType} is not supported yet.");
         }
     }
+}
 }

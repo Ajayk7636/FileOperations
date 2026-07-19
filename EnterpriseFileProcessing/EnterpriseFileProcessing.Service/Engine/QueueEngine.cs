@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using EnterpriseFileProcessing.Core.Interfaces;
 using EnterpriseFileProcessing.Core.Models;
 
-namespace EnterpriseFileProcessing.Service.Engine;
+namespace EnterpriseFileProcessing.Service.Engine
+{
+
 
 public class QueueEngine : IQueueEngine
 {
@@ -23,6 +25,17 @@ public class QueueEngine : IQueueEngine
     public void Start(CancellationToken cancellationToken)
     {
         _isRunning = true;
+
+        // Recover interrupted jobs on startup
+        var runningJobs = _jobRepository.GetJobsByState(JobState.Running, 100).ToList();
+        foreach (var job in runningJobs)
+        {
+            Console.WriteLine($"[QueueEngine] Recovering interrupted job {job.JobId}");
+            job.State = JobState.Waiting; // Reset to Waiting to retry
+            _jobRepository.UpdateJob(job);
+            _jobRepository.AddJobLog(job.JobId, "Job recovered from interrupted state on service startup", "Info");
+        }
+
         Console.WriteLine("[QueueEngine] Started listening for jobs...");
 
         // Polling loop
@@ -68,4 +81,5 @@ public class QueueEngine : IQueueEngine
         _isRunning = false;
         Console.WriteLine("[QueueEngine] Stopped.");
     }
+}
 }

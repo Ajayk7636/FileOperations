@@ -1,0 +1,14 @@
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/bin/Debug/net462/EnterpriseFileProcessing.Data.dll
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/bin/Debug/net462/EnterpriseFileProcessing.Data.pdb
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/bin/Debug/net462/System.Data.SqlClient.dll
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/bin/Debug/net462/EnterpriseFileProcessing.Core.dll
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/bin/Debug/net462/EnterpriseFileProcessing.Core.pdb
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.csproj.AssemblyReference.cache
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.GeneratedMSBuildEditorConfig.editorconfig
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.AssemblyInfoInputs.cache
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.AssemblyInfo.cs
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.csproj.CoreCompileInputs.cache
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.sourcelink.json
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/Enterpri.9E718F21.Up2Date
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.dll
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/Debug/net462/EnterpriseFileProcessing.Data.pdb

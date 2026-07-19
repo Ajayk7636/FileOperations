@@ -1,4 +1,6 @@
-namespace EnterpriseFileProcessing.Core.Models;
+namespace EnterpriseFileProcessing.Core.Models
+{
+
 
 public enum ExistingFilePolicy
 {
@@ -9,4 +11,5 @@ public enum ExistingFilePolicy
     CreateVersion = 5,
     FailJob = 6,
     MergeFolderStructure = 7
+}
 }

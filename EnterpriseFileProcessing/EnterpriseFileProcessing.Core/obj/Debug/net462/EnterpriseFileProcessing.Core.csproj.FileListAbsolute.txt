@@ -1,0 +1,9 @@
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/bin/Debug/net462/EnterpriseFileProcessing.Core.dll
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/bin/Debug/net462/EnterpriseFileProcessing.Core.pdb
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.GeneratedMSBuildEditorConfig.editorconfig
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.AssemblyInfoInputs.cache
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.AssemblyInfo.cs
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.csproj.CoreCompileInputs.cache
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.sourcelink.json
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.dll
+/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/Debug/net462/EnterpriseFileProcessing.Core.pdb
