@@ -1,0 +1,120 @@
+{
+  "format": 1,
+  "restore": {
+    "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/EnterpriseFileProcessing.Data.csproj": {}
+  },
+  "projects": {
+    "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/EnterpriseFileProcessing.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/EnterpriseFileProcessing.Core.csproj",
+        "projectName": "EnterpriseFileProcessing.Core",
+        "projectPath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/EnterpriseFileProcessing.Core.csproj",
+        "packagesPath": "/home/jules/.nuget/packages/",
+        "outputPath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/jules/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net462"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net462": {
+            "targetAlias": "net462",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net462": {
+          "targetAlias": "net462",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.103/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/EnterpriseFileProcessing.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/EnterpriseFileProcessing.Data.csproj",
+        "projectName": "EnterpriseFileProcessing.Data",
+        "projectPath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/EnterpriseFileProcessing.Data.csproj",
+        "packagesPath": "/home/jules/.nuget/packages/",
+        "outputPath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/jules/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net462"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net462": {
+            "targetAlias": "net462",
+            "projectReferences": {
+              "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/EnterpriseFileProcessing.Core.csproj": {
+                "projectPath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Core/EnterpriseFileProcessing.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net462": {
+          "targetAlias": "net462",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.103/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

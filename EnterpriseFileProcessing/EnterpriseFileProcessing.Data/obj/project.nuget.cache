@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "OMf+2YBrxvI=",
+  "success": true,
+  "projectFilePath": "/app/EnterpriseFileProcessing/EnterpriseFileProcessing.Data/EnterpriseFileProcessing.Data.csproj",
+  "expectedPackageFiles": [
+    "/home/jules/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.3/microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "/home/jules/.nuget/packages/microsoft.netframework.referenceassemblies.net462/1.0.3/microsoft.netframework.referenceassemblies.net462.1.0.3.nupkg.sha512",
+    "/home/jules/.nuget/packages/system.data.sqlclient/4.8.6/system.data.sqlclient.4.8.6.nupkg.sha512"
+  ],
+  "logs": []
+}
