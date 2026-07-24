@@ -14,7 +14,13 @@ public static class OperationFactory
         {
             case OperationType.Copy:
                 return new CopyHandler();
-            // Other operations (Move, Zip, Unzip, etc.) would be added here
+            case OperationType.Zip:
+                return new ZipHandler();
+            case OperationType.Unzip:
+                return new UnzipHandler();
+            case OperationType.Decrypt:
+                return new DecryptHandler();
+            // Other operations (Move, etc.) would be added here
             default:
                 throw new NotSupportedException($"Operation {operationType} is not supported yet.");
         }

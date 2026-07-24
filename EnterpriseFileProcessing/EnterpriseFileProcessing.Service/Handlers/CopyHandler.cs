@@ -22,14 +22,28 @@ public class CopyHandler : IOperationHandler
 
         string source = "C:\\source";
         string dest = "C:\\dest";
+        bool skipExecution = false;
 
         try
         {
             var config = JObject.Parse(job.RequestJson);
             if (config["SourcePath"] != null) source = config["SourcePath"].ToString();
             if (config["DestinationPath"] != null) dest = config["DestinationPath"].ToString();
+            if (config["SkipExecution"] != null) skipExecution = config.Value<bool>("SkipExecution");
         }
         catch { /* fallback to mock */ }
+
+        MetricsHelper.GetDirectoryMetrics(source, out long srcSize, out int srcCount);
+        Console.WriteLine($"[CopyHandler Job {job.JobId}] Source Data: Count = {srcCount}, Size = {MetricsHelper.FormatSize(srcSize)}");
+
+        MetricsHelper.GetDirectoryMetrics(dest, out long destSize, out int destCount);
+        Console.WriteLine($"[CopyHandler Job {job.JobId}] Existing Destination Data: Count = {destCount}, Size = {MetricsHelper.FormatSize(destSize)}");
+
+        if (skipExecution)
+        {
+            Console.WriteLine($"[CopyHandler Job {job.JobId}] SkipExecution flag is set. Skipping Robocopy process.");
+            return;
+        }
 
         var processInfo = new ProcessStartInfo
         {
