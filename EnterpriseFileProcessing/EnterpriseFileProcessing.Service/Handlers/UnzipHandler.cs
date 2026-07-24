@@ -19,6 +19,7 @@ namespace EnterpriseFileProcessing.Service.Handlers
             string sourceZip = "C:\\source\\archive.zip";
             string destFolder = "C:\\dest\\";
             string passwordArgs = "";
+            bool skipExecution = false;
 
             try
             {
@@ -26,8 +27,22 @@ namespace EnterpriseFileProcessing.Service.Handlers
                 if (config["ZipFilePath"] != null) sourceZip = config["ZipFilePath"].ToString();
                 if (config["DestinationPath"] != null) destFolder = config["DestinationPath"].ToString();
                 if (config["Password"] != null) passwordArgs = $"-p\"{config["Password"].ToString()}\"";
+                if (config["SkipExecution"] != null) skipExecution = config.Value<bool>("SkipExecution");
             }
             catch { }
+
+            MetricsHelper.GetFileMetrics(sourceZip, out long sourceZipSize);
+            MetricsHelper.GetZipMetrics(sourceZip, out long uncompressedSize, out int zipFileCount);
+            Console.WriteLine($"[UnzipHandler Job {job.JobId}] Source Zip: Size = {MetricsHelper.FormatSize(sourceZipSize)}, Uncompressed Size = {MetricsHelper.FormatSize(uncompressedSize)}, Files = {zipFileCount}");
+
+            MetricsHelper.GetDirectoryMetrics(destFolder, out long destSize, out int destCount);
+            Console.WriteLine($"[UnzipHandler Job {job.JobId}] Existing Destination Data: Count = {destCount}, Size = {MetricsHelper.FormatSize(destSize)}");
+
+            if (skipExecution)
+            {
+                Console.WriteLine($"[UnzipHandler Job {job.JobId}] SkipExecution flag is set. Skipping Unzip process.");
+                return;
+            }
 
             var processInfo = new ProcessStartInfo
             {

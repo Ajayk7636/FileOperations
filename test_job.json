@@ -1,0 +1,4 @@
+{
+  "OperationType": 1,
+  "RequestJson": "{\"SourcePath\": \"EnterpriseFileProcessing.Service/bin\", \"DestinationPath\": \"test_dest\", \"SkipExecution\": true}"
+}
